@@ -128,7 +128,7 @@ public class Piece {
      * @param square the position to which this piece will be moved.
      */
     private void move(Square square) {
-        BoardController.getSquare(x,y).removePiece();
+        BoardController.getSquare(x, y).removePiece();
         placeOnSquare(square);
         BoardController.switchTurns();
         setActive(false);
