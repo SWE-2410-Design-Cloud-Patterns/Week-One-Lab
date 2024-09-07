@@ -15,3 +15,6 @@ on the same color squares (moving diagonally) and can only move to an adjacent s
 
 
 ## The First Five Steps
+The following steps add king pieces to the game. All changes in this lab should be to the file ```Piece.java```. 
+If you feel you need to change other files, talk to your instructor to identify an alternative approach.
+
