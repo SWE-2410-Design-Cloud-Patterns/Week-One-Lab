@@ -16,7 +16,7 @@ on the same color squares (moving diagonally) and can only move to an adjacent s
 
 ## The First Six Steps
 The following steps add king pieces to the game. All changes in this lab should be to the file ```Piece.java```. 
-- [ ] Identify the place in the code where the type of piece is defined.
+- [*] Identify the place in the code where the type of piece is defined.
 - [ ] Add a boolean at that place to track whether a piece is a “king”.
 - [ ] Add an optional parameter to the Piece constructor that allows clients to create pieces as kings from the start. By default, pieces are not kings. As you do this, keep the DRY principle in mind!
 - [ ] Identify the place in the code where it determines that a black piece has reached the last row of the board.
@@ -32,4 +32,7 @@ The following solutions are listed below here for the steps that are listed abov
     }
     private final Type type;
 ```
-
+2. Add a boolean at that place to track whether a piece is a “king”.
+```
+    private boolean isKing;
+```
