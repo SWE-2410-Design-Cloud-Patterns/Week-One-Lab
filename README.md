@@ -14,7 +14,11 @@ placing a second checker on it. Kings can then move both forwards and backwards.
 on the same color squares (moving diagonally) and can only move to an adjacent square or jump one opponent piece.
 
 
-## The First Five Steps
+## The First Six Steps
 The following steps add king pieces to the game. All changes in this lab should be to the file ```Piece.java```. 
-If you feel you need to change other files, talk to your instructor to identify an alternative approach.
-
+- [ ] Identify the place in the code where the type of piece is defined.
+- [ ] Add a boolean at that place to track whether a piece is a “king”.
+- [ ] Add an optional parameter to the Piece constructor that allows clients to create pieces as kings from the start. By default, pieces are not kings. As you do this, keep the DRY principle in mind!
+- [ ] Identify the place in the code where it determines that a black piece has reached the last row of the board.
+- [ ] Modify this code to identify when a red piece has reached the last row as it moves in the opposite direction across the board.
+- [ ] When a piece reaches one of these positions, update the piece’s state to indicate it now represents a king.
