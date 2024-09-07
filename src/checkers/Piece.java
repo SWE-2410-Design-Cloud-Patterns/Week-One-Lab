@@ -19,15 +19,33 @@ public class Piece {
      */
     private int x, y;
     private final Ellipse ellipse;
+    private final Ellipse kingEllipse;
+
+    private boolean isKing;
 
     public Piece(Type type, int x, int y) {
         this.type = type;
         this.x = x;
         this.y = y;
         ellipse = createEllipse();
+        kingEllipse = createEllipse();
+        kingEllipse.setVisible(false);
         setActive(false);
         reposition();
-        BoardController.getSquare(x,y).placePiece(this);
+        BoardController.getSquare(x, y).placePiece(this);
+    }
+
+    public Piece(Type type, int x, int y, boolean isKing) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.isKing = isKing;
+        ellipse = createEllipse();
+        kingEllipse = createEllipse();
+        kingEllipse.setVisible(false);
+        reposition();
+        BoardController.getSquare(x, y).placePiece(this);
+
     }
 
     private Ellipse createEllipse() {
@@ -58,7 +76,9 @@ public class Piece {
 
     private void reposition() {
         ellipse.setLayoutX(x* BoardController.SQUARE_SIZE + BoardController.SQUARE_SIZE/2);
-        ellipse.setLayoutY(y* BoardController.SQUARE_SIZE + BoardController.SQUARE_SIZE/2);
+        ellipse.setLayoutY(y* BoardController.SQUARE_SIZE + BoardController.SQUARE_SIZE/2 + 10);
+        kingEllipse.setLayoutX(x* BoardController.SQUARE_SIZE + BoardController.SQUARE_SIZE/2);
+        kingEllipse.setLayoutY(y* BoardController.SQUARE_SIZE + BoardController.SQUARE_SIZE/2);
     }
 
     private void trySetActive() {
@@ -68,8 +88,10 @@ public class Piece {
     public void setActive(boolean isActive) {
         if(isActive) {
             ellipse.setStrokeWidth(3);
+            kingEllipse.setStrokeWidth(3);
         } else {
             ellipse.setStrokeWidth(1);
+            kingEllipse.setStrokeWidth(1);
         }
     }
 
@@ -112,7 +134,13 @@ public class Piece {
         setActive(false);
 
         if(type.equals(Type.BLACK) && y == 0) {
-            BoardController.setMessage("Kings are not yet implemented. Sorry!");
+            this.isKing = true;
+            kingEllipse.setVisible(true);
+            BoardController.setMessage("The Black Piece is now a King");
+        } else if(type.equals(Type.RED) && y == 5) {
+            this.isKing = true;
+            kingEllipse.setVisible(true);
+            BoardController.setMessage("The Red Piece is now a King");
         }
     }
 
@@ -148,6 +176,7 @@ public class Piece {
     public void removeSelf() {
         BoardController.getSquare(x,y).removePiece();
         BoardController.removeChild(ellipse);
+        BoardController.removeChild(kingEllipse);
     }
 
     /**
@@ -155,6 +184,10 @@ public class Piece {
      * @return true if this piece can move to that square
      */
     public boolean isValidOrdinaryMove(Square square) {
+        if(isKing) {
+            return Math.abs(square.getY() - y) == 1 &&
+                    Math.abs(square.getX() - x) == 1;
+        }
         if(type.equals(Type.BLACK)) {
             return (square.getY() == y - 1 &&
                     Math.abs(square.getX()-x) == 1);
@@ -186,6 +219,15 @@ public class Piece {
      *      Otherwise, return the piece that would be removed by moving to that square.
      */
     public Piece getCapturedPiece(Square square) {
+        if(isKing) {
+            if(square.getY() == y - 2 && Math.abs(square.getX() - x) == 2 || square.getY() == y + 2 &&
+                    Math.abs(square.getX() - x) == 2) {
+                return getMiddlePiece(square);
+            }
+        } else {
+            return null;
+        }
+
         if(type.equals(Type.BLACK)) {
             if (!((square.getY() == y - 2 &&
                     Math.abs(square.getX()-x) == 2))) {
