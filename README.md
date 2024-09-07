@@ -22,3 +22,14 @@ The following steps add king pieces to the game. All changes in this lab should 
 - [ ] Identify the place in the code where it determines that a black piece has reached the last row of the board.
 - [ ] Modify this code to identify when a red piece has reached the last row as it moves in the opposite direction across the board.
 - [ ] When a piece reaches one of these positions, update the piece’s state to indicate it now represents a king.
+
+### Solution to First Six Steps
+The following solutions are listed below here for the steps that are listed above. These are changes in ```Piece.java```
+1. Identify the place in the code where the type of piece is defined:
+```
+    public enum Type {
+        RED, BLACK
+    }
+    private final Type type;
+```
+
